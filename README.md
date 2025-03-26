@@ -5,14 +5,12 @@ Chief among them is the python cloudCompare wrapper "CloudComPy310", which provi
 
 ## Content
 
-### Pointcloud contraction and centreline extraction
+### Point cloud contraction and centreline extraction
 
-
-### Conversion of centreline data to DXF and geojsons
-
+You can run the point cloud contraction and centreline extraction routine using the ``compute_centrelines.ipynb`` notebook.
 
 ### Raster extraction 
-
+You can run the rasterisation  routine using the ``extract_rasters.ipynb`` notebook.
 
 ## Running the scripts on Windows 
 
