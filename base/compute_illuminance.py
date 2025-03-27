@@ -1,9 +1,9 @@
 from os import path
-import CloudComPy310 as cc
-from CloudComPy310 import PCV
+import cloudComPy as cc
+from cloudComPy import PCV
 
 
-def recompute_illuminance(filepath)-> None:
+def compute_illuminance(filepath)-> None:
         """
         Utility wrapper to (re-)compute the illuminance on a point cloud file and save it in place. 
         """
@@ -11,6 +11,8 @@ def recompute_illuminance(filepath)-> None:
             print(filepath)
 
             cloud = cc.loadPointCloud(filepath)
+            if cloud == None:
+                 raise FileNotFoundError
             PCV.computeShadeVIS([cloud], is360 = True)
             ret = cc.SavePointCloud(cloud, filepath)
             cc.deleteEntity(cloud)
