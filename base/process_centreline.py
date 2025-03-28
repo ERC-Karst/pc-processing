@@ -1,14 +1,91 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from os import path 
-
+import mistree_pp as mist
 import cloudComPy as cc
 
+from os import path 
+from pc_skeletor import LBC
+from time import time
+
 # local files.
-from base.utils import extract_skeleton
 from base.to_dxf import to_DXF
 from base.to_geojsons import to_geojsons
+from base.utils import array_to_o3d, spatially_downsample, return_largest_component
 
+### laplacian-based contraction default keyword arguments
+LBC_ARGS = dict(init_contraction = 0.5,
+                init_attraction = 0.5, 
+                down_sample=0.4)
+
+### centreline default values
+CT_ARGS = dict(centreline_min_distance = 0.5,  # minimum distance between spatially downsampled points of a centreline.
+               octree_level = 8, # threshold distance for connected component analysis. 
+               min_component_size = 5,  # minimum component size in connected component analysis.
+               knn = 12) # number of nearest neighbours to be considered when building the minimum spanning tree of a thinned graph.
+
+def extract_skeleton(pcd: np.ndarray, 
+                    ct_args: dict = CT_ARGS,
+                    lbc_args: dict = LBC_ARGS
+                    )-> tuple:
+    
+    """Reads a cloud file path and extracts a simplified skeleton
+
+        ----------
+        
+        arguments:
+
+            point_cloud -> np.ndarray: a numpy array with N target coordinates (N x 3 or N x 2 matrix)
+            ct_args -> dict : a dictionary containing the centreline downsampling and clean up arguments
+            lbc_args -> dict : a dictionary containing the laplacian-based contraction algorithms
+
+        ----------
+        
+        returns :
+            local_shift -> np.ndarray 3 x 1 matrix, 
+            t -> float: time needed for contraction, 
+            nodes -> N x 3 matrix
+            edge_index -> (N-1) x 2 matrix
+            branch_index -> (N-1) x 1 matrix
+    """
+    
+    
+    s = time()
+    
+
+    # local shift
+    local_shift = np.mean(pcd, axis = 0)
+    
+    # convert to open3d object-
+    shifted_pcd = array_to_o3d(pcd - local_shift)
+    
+    # set up the Laplacian-based contraction algorithm 
+    lbc = LBC(point_cloud=shifted_pcd, **lbc_args)
+
+    # extract the skeleton (this step takes a little while) 
+    lbc.extract_skeleton()
+
+    # extract the first topology from LBC (this is usually rough and not very useful.)
+    lbc.extract_topology()
+
+    coords = np.asarray(lbc.contracted_point_cloud.points) + local_shift
+    
+    downsampled_coords = spatially_downsample(coords, 
+                                              min_distance=ct_args["centreline_min_distance"])
+
+    # perform connected component analysis to get rid of erroneous data points that sometimes appear 
+    cc0_downsampled_coords = return_largest_component(downsampled_coords, 
+                                    octree_level = ct_args["octree_level"],
+                                    min_component_size= ct_args["min_component_size"])
+    
+    
+    # unpack the x, y and z coordinates.
+    mst = mist.GetMST(*cc0_downsampled_coords.T)
+    
+    _, _, _, _, edge_index, branch_index = mst.get_stats(include_index=True, k_neighbours= ct_args["knn"])
+
+    e = time()
+    print(f"cloud contraction done in {e-s}s")
+    return local_shift, e-s, cc0_downsampled_coords, edge_index, branch_index
 
 def process_centreline(filepath, lbc_args, ct_args) -> dict:
     """
@@ -102,5 +179,6 @@ def process_centreline(filepath, lbc_args, ct_args) -> dict:
     
     # convert to DXF format. 
     to_DXF(filepath)
+    # convert to geojsons format.
     to_geojsons(filepath)
     return centreline

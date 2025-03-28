@@ -8,9 +8,17 @@ Chief among them is the python cloudCompare wrapper "CloudComPy310", which provi
 ### Point cloud contraction and centreline extraction
 
 You can run the point cloud contraction and centreline extraction routine using the ``compute_centrelines.ipynb`` notebook.
+The main idea is to iteratively contract the set of points to generate a zero-volume approximation of the curve skeleton of the cave conduit and eventually construct a 3D polyline that describes the conduit in a more general way. Part of the process includes converting the centreline in ASCII format to other interoperable formats, namely the AutoCAD DXF format, as well as the geographic JSON format. 
+
+### Specific point cloud processing routines
+
+We provide an example notebook showcasing some of the CloudComPy library routines, namely for running the Cloth Simulation Filter to segment the floor from the conduit ceiling and also computing the Illuminance value (visible sky portion, PCV). 
+
 
 ### Raster extraction 
-You can run the rasterisation  routine using the ``extract_rasters.ipynb`` notebook.
+You can run the rasterisation  routine using the ``extract_rasters.ipynb`` notebook. Rasterisation is a process turning the 3D data set of point positions to a 2.5D image, containing for each pair of x and y coordinates a single elevation value. Raster images can be post processed in any GIS software or dedicated code libraries. Here we present the routine used to rasterise conduit floor and ceiling.
+
+
 
 ## Running the scripts on Windows 
 
