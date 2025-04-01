@@ -1,4 +1,14 @@
-from os import path
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'cloth_simulation_filter.py'
+author:         Tanguy Racine
+date:           2025
+
+Wrapper for Cloth Simulation Filter in CloudComPy
+"""
+
 import cloudComPy as cc
 from cloudComPy import CSF
 

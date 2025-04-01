@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'utils.py'
+author:         Tanguy Racine
+date:           2025
+
+Ac collection of utility functions related to point cloud processing: 
+- largest component analysis
+- spatial downsampling
+- numpy to open3d point cloud formats.
+"""
+
 import numpy as np 
 import open3d as o3d
 import cloudComPy as cc
