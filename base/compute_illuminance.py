@@ -1,4 +1,14 @@
-from os import path
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'compute_illuminance.py'
+author:         Tanguy Racine
+date:           2025
+
+Wrapper for Illuminance computation in CloudComPy
+"""
+
 import cloudComPy as cc
 from cloudComPy import PCV
 

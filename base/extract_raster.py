@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'extract_raster.py'
+author:         Tanguy Racine
+date:           2025
+
+Wrapper for raster extraction routines in CloudComPy
+"""
+
 from os import path 
 import cloudComPy as cc
 

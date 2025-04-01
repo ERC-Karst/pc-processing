@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'to_geojsons.py'
+author:         Tanguy Racine
+date:           2025
+
+Wrapper translating ASCII format centrelines to geojsons
+"""
+
 import numpy as np
 from yaml import load
 from yaml.loader import Loader

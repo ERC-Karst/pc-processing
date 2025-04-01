@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'process_centreline.py'
+author:         Tanguy Racine
+date:           2025
+
+Wrapper for point cloud contraction and centreline topological reconstruction
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import mistree_pp as mist

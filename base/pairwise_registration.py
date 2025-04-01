@@ -1,5 +1,14 @@
-## Based on Arun et al., 1987 Least-Squares Fitting of Two 3-D Point Sets
-## https://stackoverflow.com/questions/66923224/rigid-registration-of-two-point-clouds-with-known-correspondence
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'pairwise_registration.py'
+author:         Tanguy Racine
+date:           2025
+
+Python implementation of Least squares fitting of 2 3D point sets (Arun et al., 1987)
+"""
+
     
 import numpy as np
 
