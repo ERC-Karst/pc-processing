@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+File (Python):  'to_dxf.py'
+author:         Tanguy Racine
+date:           2025
+
+Wrapper translating ASCII format centrelines to DXF
+"""
+
 import ezdxf
 import numpy as np
 from os import path

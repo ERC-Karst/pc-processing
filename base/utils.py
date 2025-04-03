@@ -48,8 +48,8 @@ def spatially_downsample(point_cloud: np.ndarray,
     return downsampled.toNpArrayCopy()
 
 def return_largest_component(point_cloud: np.ndarray, 
-                             octree_level: int = CT_ARGS["octree_level"],
-                             min_component_size: int = CT_ARGS["min_component_size"]
+                             octree_level: int= 8,
+                             min_component_size: int =10
                              )-> np.ndarray :
     """A convenience function for finding the largest connected component of an array of spatial coordinates.
     using the dedicated CloudCompare algorithm. 
